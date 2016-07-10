@@ -1,0 +1,35 @@
+.page-header {
+  width: 100%;
+  height: 100px;
+  background-color: #d7d7d7;
+}
+.header-menu {
+  width: 200px;
+  background-color: #00f;
+}
+.header-menu .header-menu-item {
+  display: block;
+}
+.products .product-item {
+  width: 48%;
+  height: 150px;
+}
+.products .product-item img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.rates {
+  padding: 20px 0;
+}
+.rates span {
+  padding: 0 10px;
+  display: inline-block;
+}
+.rates span:first-child {
+  padding-left: 0;
+}
+.rates span:last-child {
+  padding-right: 0;
+}

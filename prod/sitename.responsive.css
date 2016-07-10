@@ -1,22 +1,90 @@
-.header-menu-burger {
+.menu-burger {
   position: absolute;
-  left: 50%;
-  margin-left: -20px;
-  top: 13px;
+  left: 0;
+  top: 14px;
   z-index: 1000;
-  display: none;
-  width: 40px;
+  display: block;
+  width: 30px;
+  height: 25px;
   cursor: pointer;
 }
-.header-menu-burger .header-menu-burger-top,
-.header-menu-burger .header-menu-burger-middle,
-.header-menu-burger .header-menu-burger-bottom {
+.menu-burger .menu-burger-inner {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -2px;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #f00;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.menu-burger:before,
+.menu-burger:after {
+  content: "";
+  position: absolute;
+  left: 0;
   display: block;
   width: 100%;
-  height: 5px;
-  border-radius: 8px;
-  background-color: #fff;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #f00;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.header-menu-burger .header-menu-burger-middle {
-  margin: 8px 0;
+.menu-burger:before {
+  top: 0;
+}
+.menu-burger:after {
+  bottom: 0;
+}
+.menu-burger.active .menu-burger-inner {
+  opacity: 0;
+}
+.menu-burger.active:before {
+  transform: rotate(-45deg) translateY(10px) translateX(-5px);
+}
+.menu-burger.active:after {
+  transform: rotate(45deg) translateY(-10px) translateX(-5px);
+}
+.menu-overlay {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+}
+.show-menu .menu-overlay {
+  display: block;
+}
+.mobile-scroll-holder {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.mobile-scroll-holder .mobile-scroll {
+  white-space: nowrap;
+}
+.mobile-scroll-holder::-webkit-scrollbar {
+  display: none;
+}
+.page {
+  overflow: hidden;
+}
+.page-content {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.header-menu {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+body.show-menu .header-menu {
+  transform: translateX(0);
+}
+body.show-menu .page-content {
+  transform: translateX(200px);
 }

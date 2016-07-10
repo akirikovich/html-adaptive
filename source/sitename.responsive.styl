@@ -1,24 +1,117 @@
-.header-menu-burger
+// Menu burger
+.menu-burger
 	position absolute
-	left 50%
-	margin-left -20px
-	top 13px
+	left 0
+	top 14px
 	z-index 1000
 	
-	display none
-	width 40px
+	display block
+	width 30px
+	height 25px
 
 	cursor pointer
 	
-	.header-menu-burger-top
-	.header-menu-burger-middle
-	.header-menu-burger-bottom
+	.menu-burger-inner
+		position absolute
+		left 0
+		top 50%
+		margin-top -2px
+
+		width 100%
+		height 4px
+		
+		border-radius 4px
+		background-color red
+		
+		transition opacity 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940)
+	
+	&:before
+	&:after
+		content ""
+		
+		position absolute
+		left 0
+		
 		display block
 		width 100%
-		height 5px
+		height 4px
 		
-		border-radius 8px
-		background-color #FFF
+		border-radius 4px
+		background-color red
+		
+		transition transform 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940)
+		
+	&:before
+		top 0
+		
+	&:after
+		bottom 0
+		
+	&.active
+		.menu-burger-inner
+			opacity 0
 
-	.header-menu-burger-middle
-		margin 8px 0
+		&:before
+			transform rotate(-45deg) translateY(10px) translateX(-5px)
+			
+		&:after
+			transform rotate(45deg) translateY(-10px) translateX(-5px)
+		
+.menu-overlay
+	position fixed
+	z-index 10
+	left 0
+	top 0
+	right 0
+	bottom 0
+	
+	display none
+
+.show-menu
+	.menu-overlay
+		display block
+// //Menu burger
+
+
+
+// Scroll
+.mobile-scroll-holder
+	overflow-x scroll
+	overflow-y hidden
+	
+	.mobile-scroll
+		white-space nowrap
+	
+	&::-webkit-scrollbar
+		display none
+// //Scroll
+
+
+
+
+
+// Aside
+.page
+	overflow hidden
+
+.page-content
+	transition transform 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940)
+		
+.header-menu
+	position absolute
+	z-index 20
+	left 0
+	top 0
+
+	transform translateX(-100%)
+	
+	transition transform 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940)
+
+body.show-menu
+	.header-menu
+		transform translateX(0)
+		
+	.page-content
+		transform translateX(200px)
+// //
+	
