@@ -88,6 +88,55 @@
 
 
 
+// Adaptive table
+.adaptive-table
+	display block
+	
+	thead
+	tbody
+	tfoot
+	tr
+	th
+	td
+		display block
+		
+	thead
+		tr
+			position absolute
+			left -9999px
+			top -9999px
+			
+	td
+		position relative
+		
+		padding-left 50%
+		
+		&:before
+			content attr(data-header)
+
+			position absolute
+			left 6px
+			top 6px
+			
+			width 45%
+			padding-right 5%
+			
+			white-space nowrap
+// //Adaptive table
+
+
+
+// Panels
+.panel-title
+	cursor pointer
+	
+.panel-content
+	display none
+	
+	&.active
+		display block
+// //Panels
+
 
 
 // Aside

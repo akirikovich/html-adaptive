@@ -10,17 +10,26 @@
 
 		return {
 
-
-
-			// Adds href="tel" to the phone numbers
-			mobilizePhones: function($phones) {
-				$phones.each(function() {
-					var $phone = $(this),
-						phoneText = $phone.text(),
-						phoneNum = phoneText.replace(/ /g,"").replace(/-/g,"").replace(/\(/g,"").replace(/\)/g,""),
-						phoneLink = '<a href="tel:phoneNum">' + phoneText + '</a>';
-					$phone.empty().html(phoneLink);
-				});
+			// Adds href="tel:" to the phone numbers
+			mobilizePhones: {
+				init: function($phones) {
+					$phones.each(function() {
+						var $phone = $(this),
+							phoneText = $phone.text(),
+							phoneNum = phoneText.replace(/ /g,"").replace(/-/g,"").replace(/\(/g,"").replace(/\)/g,""),
+							phoneLink = '<a href="tel:' + phoneNum + '" class="phone-link' + ' ' + $phone.attr("class") + '">' + phoneText + '</a>';
+						
+						$phone.empty().html(phoneLink);
+					});
+				},
+				destroy: function($phones) {
+					$phones.each(function() {
+						var $phone = $(this),
+							phoneText = $phone.text();
+						
+						$phone.empty().html(phoneText);
+					});
+				}
 			},
 
 
@@ -90,14 +99,65 @@
 				}
 			},
 
+
+
+			// Adaptize tables
+			adaptizeTable: {
+				init: function($tables) {
+					$tables.each(function() {
+						var $table = $(this);
+						$table.addClass("adaptive-table");
+
+						var tableTh = [];
+						$("th", $table).each(function() {
+							tableTh.push($(this).text());
+						});
+
+						$("td", $table).each(function(i) {
+							$(this).attr("data-header", tableTh[i % tableTh.length]);
+						});
+					});
+				},
+				destroy: function($tables) {
+					$tables.removeClass("adaptive-table");
+				}
+			},
+
+
+
+			// Panels
+			panels: {
+				init: function($title, $content) {
+					$content.addClass("panel-content");
+					$title
+						.addClass("panel-title")
+						.data("panel", $content)
+						.on("click", function() {
+							var $t = $(this);
+							$t.toggleClass("active");
+							$t.data("panel").toggleClass("active");
+						});
+				},
+				destroy: function($title, $content) {
+					$content.removeClass("panel-content");
+					$title
+						.removeClass("panel-title")
+						.data("panel", null)
+						.off("click")
+				}
+			},
+
+
+
 			// Initialize scripts for each window size
 			initSSM: function() {
 				var self = this;
 
 				ssm.addStates([
 					{
-						id: "tablet",
-						query: "(max-width: 900px)",
+						// Tablets in landscape orientation
+						id: "tabletLandscape",
+						query: "(max-width: 1000px)",
 						onEnter: function() {
 
 						},
@@ -105,12 +165,25 @@
 
 						}
 					}, {
+
+						// Tablets in portrait orientation
+						id: "tabletPortrait",
+						query: "(max-width: 770px)",
+						onEnter: function() {
+
+						},
+						onLeave: function() {
+
+						}
+					}, {
+
+						// Mobiles in landscape orientations
 						id: "mobileLandscape",
-						query: "(max-width: 680px)",
+						query: "(max-width: 670px)",
 						onEnter: function() {
 							self.menu.init();
 							
-							self.mobilizePhones($(".header-phone", $sel.body));
+							self.mobilizePhones.init($(".header-phone", $sel.body));
 							
 							self.scroll.make($(".rates", $sel.body), {
 								items: "span"
@@ -139,15 +212,23 @@
 						onLeave: function() {
 							self.slider.remove($(".products", $sel.body));
 							self.scroll.remove($(".rates", $sel.body));
+							self.mobilizePhones.destroy($(".header-phone", $sel.body));
 						}
 					}, {
-						id: "mobilePortrait",
-						query: "(max-width: 560px)",
-						onEnter: function() {
 
+						// Mobiles in portrait orientation
+						id: "mobilePortrait",
+						query: "(max-width: 375px)",
+						onEnter: function() {
+							self.adaptizeTable.init($("table", $sel.body));
+							$("section").each(function() {
+								var $section = $(this);
+								self.panels.init($section.find("div:eq(0)"), $section.find("div:eq(1)"));
+							});
 						},
 						onLeave: function() {
-							
+							self.adaptizeTable.destroy($("table", $sel.body));
+							self.panels.destroy($("section").find("div:eq(0)"), $("section").find("div:eq(1)"));
 						}
 					}
 				]);
@@ -157,8 +238,5 @@
 	})();
 
 	siteResponsive.initSSM();
-
-
-
 
 })(jQuery);

@@ -68,6 +68,44 @@
 .mobile-scroll-holder::-webkit-scrollbar {
   display: none;
 }
+.adaptive-table {
+  display: block;
+}
+.adaptive-table thead,
+.adaptive-table tbody,
+.adaptive-table tfoot,
+.adaptive-table tr,
+.adaptive-table th,
+.adaptive-table td {
+  display: block;
+}
+.adaptive-table thead tr {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
+.adaptive-table td {
+  position: relative;
+  padding-left: 50%;
+}
+.adaptive-table td:before {
+  content: attr(data-header);
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 45%;
+  padding-right: 5%;
+  white-space: nowrap;
+}
+.panel-title {
+  cursor: pointer;
+}
+.panel-content {
+  display: none;
+}
+.panel-content.active {
+  display: block;
+}
 .page {
   overflow: hidden;
 }
